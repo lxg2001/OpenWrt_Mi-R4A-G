@@ -71,11 +71,11 @@ jobs:
 
     - name: Revise mt7621_xiaomi_mi-router-4a-3g-v2.dtsi
       run: |
-        cp -f files/16M/mt7621_xiaomi_mi-router-4a-3g-v2.dtsi openwrt/target/linux/ramips/dts
+        cp -f Replace/mt7621_xiaomi_mi-router-4a-3g-v2.dtsi openwrt/target/linux/ramips/dts
         
     - name: Revise mt7621.mk
       run: |
-        cp -f files/16M/mt7621.mk openwrt/target/linux/ramips/image
+        cp -f Replace/mt7621.mk openwrt/target/linux/ramips/image
         
     - name: Rvise config_generate
       run: |

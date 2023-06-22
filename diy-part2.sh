@@ -94,8 +94,8 @@ echo "uci set wireless.default_radio1.key=ueubmbzr" >> package/lean/default-sett
 echo "uci commit wireless" >> package/lean/default-settings/files/zzz-default-settings
 echo "" >> package/lean/default-settings/files/zzz-default-settings
 
-#加回zzz-default-settings的exit 0
-echo "exit 0" >> package/lean/default-settings/files/zzz-default-settings
-
 #网络
 echo "uci set network.lan.ip6assign='64'" >> /home/lxg/lede/package/lean/default-settings/files/zzz-default-settings
+
+#加回zzz-default-settings的exit 0
+echo "exit 0" >> package/lean/default-settings/files/zzz-default-settings

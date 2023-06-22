@@ -43,23 +43,6 @@ mv feeds/small8/luci-theme-design feeds/luci/themes
 sed -i 's/login/login -f root/g' feeds/packages/utils/ttyd/files/ttyd.config
 sed -i '/${interface:+-i $interface}/d' feeds/packages/utils/ttyd/files/ttyd.init
 
-#修复wifidog
-sed -i '/init.d/d' feeds/packages/net/wifidog/Makefile
-
-#替换AdguardHome
-rm -rf feeds/packages/net/adguardhome
-mv feeds/small8/adguardhome feeds/packages/net
-
-#修复transmission
-sed -i '/procd_add_jail_mount "$config_file"/d' feeds/packages/net/transmission/files/transmission.init
-sed -i '137i procd_add_jail_mount "$config_file"\n        web_home="${web_home:-/usr/share/transmission/web}"\n        [ -d "$web_home" ] && procd_add_jail_mount "$web_home"' feeds/packages/net/transmission/files/transmission.init
-sed -i 's/procd_add_jail_mount "$config_file"/        procd_add_jail_mount "$config_file"/g' feeds/packages/net/transmission/files/transmission.init
-
-#修改netdata
-rm -rf feeds/luci/applications/luci-app-netdata
-git clone https://hub.fgit.ml/sirpdboy/luci-app-netdata feeds/luci/applications/luci-app-netdata
-rm -rf feeds/luci/applications/luci-app-netdata/.git
-
 #删除zzz-default-settings的exit 0
 sed -i '/exit 0/d' package/lean/default-settings/files/zzz-default-settings
 

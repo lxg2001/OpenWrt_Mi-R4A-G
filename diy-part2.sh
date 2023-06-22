@@ -79,7 +79,7 @@ echo "uci set wireless.default_radio0=wifi-iface" >> package/lean/default-settin
 echo "uci set wireless.default_radio0.device=radio0" >> package/lean/default-settings/files/zzz-default-settings
 echo "uci set wireless.default_radio0.network=lan" >> package/lean/default-settings/files/zzz-default-settings
 echo "uci set wireless.default_radio0.mode=ap" >> package/lean/default-settings/files/zzz-default-settings
-echo "uci set wireless.default_radio0.ssid=OpenWrt" >> package/lean/default-settings/files/zzz-default-settings
+echo "uci set wireless.default_radio0.ssid=OpenWrt_2.4G" >> package/lean/default-settings/files/zzz-default-settings
 echo "uci set wireless.default_radio0.encryption=sae-mixed" >> package/lean/default-settings/files/zzz-default-settings
 echo "uci set wireless.default_radio0.key=ueubmbzr" >> package/lean/default-settings/files/zzz-default-settings
 
@@ -87,7 +87,7 @@ echo "uci set wireless.default_radio1=wifi-iface" >> package/lean/default-settin
 echo "uci set wireless.default_radio1.device=radio1" >> package/lean/default-settings/files/zzz-default-settings
 echo "uci set wireless.default_radio1.network=lan" >> package/lean/default-settings/files/zzz-default-settings
 echo "uci set wireless.default_radio1.mode=ap" >> package/lean/default-settings/files/zzz-default-settings
-echo "uci set wireless.default_radio1.ssid=OpenWrt" >> package/lean/default-settings/files/zzz-default-settings
+echo "uci set wireless.default_radio1.ssid=OpenWrt_5G" >> package/lean/default-settings/files/zzz-default-settings
 echo "uci set wireless.default_radio1.encryption=sae-mixed" >> package/lean/default-settings/files/zzz-default-settings
 echo "uci set wireless.default_radio1.key=ueubmbzr" >> package/lean/default-settings/files/zzz-default-settings
 

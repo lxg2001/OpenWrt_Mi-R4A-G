@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: Build OpenWrt_Lede_Mi-R4A-G
+name: Build OpenWrt
 
 on:
   repository_dispatch:
@@ -48,12 +48,11 @@ jobs:
       run: |
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
-        sudo -E apt-get -qq full-upgrade
         sudo -E apt-get -qq install ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \
         bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib \
         git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libfuse-dev libglib2.0-dev libgmp3-dev libltdl-dev \
         libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz \
-        mkisofs msmtp nano ninja-build npm p7zip p7zip-full patch pkgconf python2.7 python3 python3-pyelftools \
+        mkisofs msmtp nano ninja-build npm p7zip p7zip-full patch pip pkgconf python2.7 python3 python3-pyelftools \
         libpython3-dev qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip \
         vim wget xmlto xxd zlib1g-dev 
         sudo -E apt-get -qq autoremove --purge
@@ -68,26 +67,20 @@ jobs:
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
-
+        
+    - name: Cache
+      uses: klever1988/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        prefix: ${{ github.workspace }}/openwrt   
+        
     - name: Revise mt7621_xiaomi_mi-router-4a-3g-v2.dtsi
       run: |
         cp -f Replace/mt7621_xiaomi_mi-router-4a-3g-v2.dtsi openwrt/target/linux/ramips/dts
         
     - name: Revise mt7621.mk
       run: |
-        cp -f Replace/mt7621.mk openwrt/target/linux/ramips/image
-        
-    - name: Rvise config_generate
-      run: |
-         cp -f Replace/config_generate openwrt/package/base-files/files/bin   
-    
-    - name: Revise shadow
-      run: |
-        cp -f Replace/shadow openwrt/package/base-files/files/etc
-    
-    - name: Revise mac80211.sh
-      run: |
-        cp -f Replace/mac80211.sh openwrt/package/kernel/mac80211/files/lib/wifi   
+        cp -f Replace/mt7621.mk openwrt/target/linux/ramips/image        
 
     - name: Load custom feeds
       run: |
@@ -95,25 +88,10 @@ jobs:
         chmod +x $DIY_P1_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P1_SH
-
+        
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
       
-    - name: Revise luci Makefiles
-      run: |
-        cp -rf Replace/luci/* openwrt/feeds/luci/collections
-    
-    - name: Rvise ttyd
-      run: |
-         rm -rf openwrt/feeds/packages/utils/ttyd && cp -rf Replace/ttyd/ttyd openwrt/feeds/packages/utils
-    
-    - name: Rvise luci-app-ttyd
-      run: |
-         rm -rf openwrt/feeds/luci/applications/luci-app-ttyd && cp -rf Replace/ttyd/luci-app-ttyd openwrt/feeds/luci/applications
-
-    - name: Install feeds
-      run: cd openwrt && ./scripts/feeds install -a
-
     - name: Load custom configuration
       run: |
         [ -e files ] && mv files openwrt/files
@@ -121,6 +99,9 @@ jobs:
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
+
+    - name: Install feeds
+      run: cd openwrt && ./scripts/feeds install -a
 
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0
@@ -134,17 +115,17 @@ jobs:
       run: |
         cd openwrt
         make defconfig
-        make download -j8
+        make download -j8 V=s
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
 
     - name: Upload dl directory
       uses: actions/upload-artifact@main
       if: env.UPLOAD_DL_DIR == 'true'
-      with: 
+      with:
         name: OpenWrt_dl${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        path: openwrt/dl 
-
+        path: openwrt/dl
+        
     - name: Compile the firmware
       id: compile
       run: |

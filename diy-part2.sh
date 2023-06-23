@@ -47,7 +47,8 @@ sed -i '/${interface:+-i $interface}/d' feeds/packages/utils/ttyd/files/ttyd.ini
 sed -i '/exit 0/d' package/lean/default-settings/files/zzz-default-settings
 
 #主机名
-echo "uci set system.cfg01e48a.hostname=Mi-R4A-G" >> package/lean/default-settings/files/zzz-default-settings
+echo "uci set system.@system[0].hostname=Mi-R4A-G" >> package/lean/default-settings/files/zzz-default-settings
+echo "uci commit system" >> package/lean/default-settings/files/zzz-default-settings
 echo "" >> package/lean/default-settings/files/zzz-default-settings
 
 #软件源

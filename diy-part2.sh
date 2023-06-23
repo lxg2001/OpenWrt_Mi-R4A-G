@@ -46,6 +46,10 @@ sed -i '/${interface:+-i $interface}/d' feeds/packages/utils/ttyd/files/ttyd.ini
 #删除zzz-default-settings的exit 0
 sed -i '/exit 0/d' package/lean/default-settings/files/zzz-default-settings
 
+#主机名
+echo "uci set system.cfg01e48a.hostname=Mi-R4A-G" >> package/lean/default-settings/files/zzz-default-settings
+echo "" >> package/lean/default-settings/files/zzz-default-settings
+
 #软件源
 echo "sed -i '/small8/d' /etc/opkg/distfeeds.conf" >> package/lean/default-settings/files/zzz-default-settings
 echo "" >> package/lean/default-settings/files/zzz-default-settings

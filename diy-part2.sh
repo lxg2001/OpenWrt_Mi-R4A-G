@@ -66,6 +66,7 @@ echo "uci set wireless.radio0.disabled=0" >> package/lean/default-settings/files
 echo "uci set wireless.radio0.country=US" >> package/lean/default-settings/files/zzz-default-settings
 echo "uci set wireless.radio0.legacy_rates=1" >> package/lean/default-settings/files/zzz-default-settings
 echo "uci set wireless.radio0.mu_beamformer=0" >> package/lean/default-settings/files/zzz-default-settings
+echo "uci set wireless.radio0.txpower=23" >> package/lean/default-settings/files/zzz-default-settings
 
 echo "uci set wireless.radio1.channel=auto" >> package/lean/default-settings/files/zzz-default-settings
 echo "uci set wireless.radio1.band=5g" >> package/lean/default-settings/files/zzz-default-settings
@@ -74,6 +75,7 @@ echo "uci set wireless.radio1.disabled=0" >> package/lean/default-settings/files
 echo "uci set wireless.radio1.country=US" >> package/lean/default-settings/files/zzz-default-settings
 echo "uci set wireless.radio1.legacy_rates=1" >> package/lean/default-settings/files/zzz-default-settings
 echo "uci set wireless.radio1.mu_beamformer=0" >> package/lean/default-settings/files/zzz-default-settings
+echo "uci set wireless.radio1.txpower=23" >> package/lean/default-settings/files/zzz-default-settings
 
 echo "uci set wireless.default_radio0=wifi-iface" >> package/lean/default-settings/files/zzz-default-settings
 echo "uci set wireless.default_radio0.device=radio0" >> package/lean/default-settings/files/zzz-default-settings
